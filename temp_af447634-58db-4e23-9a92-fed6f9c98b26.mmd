@@ -1,0 +1,4 @@
+graph LR
+A[User Web App] -->|HTTP/HTTPS Requests| B[Spring Boot]
+B -->|Queries & Updates| C[PostgreSQL on Amazon RDS]
+B -->|Log Events| D[Logging Library]

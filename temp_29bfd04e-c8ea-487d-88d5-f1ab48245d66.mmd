@@ -1,0 +1,6 @@
+graph LR
+    A[Client] -- HTTP Requests --> B[Spring Boot App] 
+    B[Spring Boot App] -- Log data --> C[Logging and Masking Library]
+    B[Spring Boot App] -- Database Queries --> D[Amazon RDS for PostgreSQL]
+    C[Logging and Masking Library] --> E[Error Codes]
+    D[Amazon RDS for PostgreSQL] -- Data --> B[Spring Boot App]

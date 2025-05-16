@@ -1,0 +1,34 @@
+The logging and masking library provides an opinionated set of logging configurations alongside a masking utility.
+
+DataFieldConverter:
+This class is a logback ClassicConverter implementation that converts data objects passed as arguments to log messages into JSON format. It uses ObjectMapper to convert java objects to JSON.
+
+ErrorCodeConverter:
+The ErrorCodeConverter is a custom Logback converter designed to extract error codes from log events that occur at the ERROR level. This converter helps in logging error-specific codes from various exception types, making it easier to identify and diagnose issues in production systems. With the integration of the ErrorCodeConverter, log entries will now include a new field for "errorCode", providing enhanced clarity and facilitating more effective error tracking.
+
+Extracts Error Codes: Retrieves error codes from a variety of exception types, including custom exceptions and custom Error objects.
+Supports Multiple Sources: The converter checks both the arguments passed to the log and the throwable (exception) associated with the log to extract the error code.
+Supported Exception Types:
+Custom Exceptions: Any exception extending the BaseException class, including:
+
+AuthenticationException
+BadRequestException
+DataNotFoundException
+EAPIUnavailableException
+ForbiddenException
+IntegrationException
+InvalidInputException
+SystemException
+UnprocessableEntityException
+VersionConflictException
+BaseException
+Custom Error Object
+
+Custom error objects, such as the Error object from the com.marriott.platform.framework.model.Error package.
+Logback
+Contains default patterns for how the logs will be formed when logged
+By default, root level logging is set to INFO means it will log messages with a severity level of INFO and above.
+This can be overridden by using Spring Boot's logging configuration
+Uses "MaskingJsonGeneratorDecorator" provided by Logstash Logback encoder library to mask sensitive data in logs.
+Custom implementation of "FieldMasker" to prevent the masking of null values which can be configured by providing the property logback.mask.disable.null-masking in application.properties/application.yml file.
+The authorization key, which is specified as a header upon logging in, has been identified for masking by inclusion in a predefined masking pathway.

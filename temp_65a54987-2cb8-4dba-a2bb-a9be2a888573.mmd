@@ -1,0 +1,6 @@
+graph LR
+    A["User"] -->|Request| B["Load Balancer"]
+    B["Load Balancer"] -->|Distribute request| C["Spring Boot App"]
+    C["Spring Boot App"] -->|Read/Write| D["PostgreSQL"]
+    D["PostgreSQL"] -->|Cache| E["ElastiCache"]
+    C["Spring Boot App"] -->|Logging| F["CloudWatch"]

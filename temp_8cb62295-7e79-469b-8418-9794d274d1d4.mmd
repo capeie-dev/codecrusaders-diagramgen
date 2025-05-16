@@ -1,0 +1,7 @@
+graph LR
+    A((User)) -->|HTTP Request| B[Spring Boot Application]
+    B --> |Logging with ErrorCodeConverter| C[Logging & Masking Library]
+    B --> D[Amazon RDS PostgreSQL]
+    C --> E[Logs]
+    D --> F[((Data))]
+    A -->|HTTP Response| B

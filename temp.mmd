@@ -1,0 +1,15 @@
+graph LR
+  A[User] -->|HTTP/HTTPS| B{Load Balancer}
+  B --> C(Spring Boot Web App Instance 1)
+  B --> D(Spring Boot Web App Instance 2)
+  B --> E(Spring Boot Web App Instance 3)
+  C --> F{Amazon ElastiCache}
+  D --> F
+  E --> F
+  C --> G[Amazon RDS PostgreSQL]
+  D --> G
+  E --> G
+  C --> H[Amazon CloudWatch]
+  D --> H
+  E --> H
+  G --> I[Snapshot]
