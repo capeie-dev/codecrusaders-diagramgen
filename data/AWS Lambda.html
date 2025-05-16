@@ -24,3 +24,30 @@ How it Works: [1, 26, 27]
 • Lambda runs your function in a lightweight, isolated container in response to an event trigger.  
 • AWS handles provisioning, scaling, monitoring, and fault tolerance.  
 • Output or error is returned to the invoking service.  
+
+Underlying Methods (AWS SDK & Runtime Operations):  
+
+• createFunction: Deploys a new Lambda function, specifying runtime, handler, role, and source code.  
+• invoke: Executes a Lambda function manually or via another AWS service; can be synchronous or asynchronous.  
+• deleteFunction: Permanently removes a Lambda function.  
+• updateFunctionCode: Updates the source code of an existing function without changing configuration.  
+• updateFunctionConfiguration: Modifies settings like memory, timeout, environment variables, or handler.  
+• listFunctions: Returns a list of deployed Lambda functions in the account.  
+• getFunction: Retrieves metadata, configuration, and code location for a specific function.  
+• addPermission: Grants an AWS service or principal permission to invoke the Lambda function.  
+• removePermission: Revokes previously granted invocation permissions.  
+• createAlias / updateAlias: Points a function alias (e.g., `prod`, `v1`) to a specific version of the function.  
+• publishVersion: Creates an immutable snapshot of the function code + config for release management.  
+• listEventSourceMappings: Lists integrations with event sources like DynamoDB Streams, Kinesis, or SQS.  
+• createEventSourceMapping: Connects a function to an event source for automatic triggering.  
+• deleteEventSourceMapping: Disconnects a function from an event source.  
+• putFunctionConcurrency: Configures reserved concurrency to throttle or isolate workloads.  
+• tagResource / untagResource: Adds or removes metadata tags for cost and resource tracking.
+
+Example Runtime Handlers (by language):  
+
+• **Node.js**:  
+```js
+exports.handler = async (event) => {
+  return { statusCode: 200, body: "Hello from Lambda!" };
+};
