@@ -23,3 +23,21 @@ How it Works: [1, 3, 6]
 • Brokers store and replicate topic partitions across the cluster.  
 • Consumers subscribe to topics and process records.  
 • Offset tracking allows replays and ensures message ordering per partition. 
+
+Underlying Methods (Java – Apache Kafka Client API):
+
+• `KafkaProducer.send(ProducerRecord)`: Sends a message to a Kafka topic asynchronously.  
+• `KafkaProducer.flush()`: Ensures all buffered messages are sent to the Kafka broker.  
+• `KafkaProducer.close()`: Closes the producer and releases resources.  
+• `ProducerRecord<K, V>`: Encapsulates the message to send, including topic, key, value, and optional partition.  
+• `KafkaConsumer.subscribe(List<String>)`: Subscribes to one or more topics to receive messages.  
+• `KafkaConsumer.poll(Duration)`: Retrieves records from the broker, blocking up to a specified timeout.  
+• `KafkaConsumer.commitSync()`: Commits the offset of messages that have been successfully processed.  
+• `KafkaConsumer.seek(TopicPartition, offset)`: Manually sets the position in the log to read from.  
+• `KafkaConsumer.assign(List<TopicPartition>)`: Manually assigns partitions instead of subscribing.  
+• `KafkaConsumer.close()`: Closes the consumer instance and cleans up resources.  
+• `AdminClient.createTopics() / deleteTopics()`: Programmatically manage Kafka topics.  
+• `AdminClient.listTopics() / describeTopics()`: List or describe existing Kafka topics.  
+• `KafkaStreams.start() / close()`: Starts or stops a Kafka Streams processing topology.  
+• `StreamsBuilder.stream("topic")`: Consumes from a topic in Kafka Streams API.  
+• `KStream.mapValues()` / `filter()` / `join()` / `to()`: Used to transform, filter, join, or write Kafka Streams data.
