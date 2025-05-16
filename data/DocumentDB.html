@@ -26,6 +26,19 @@ How it Works:
 • Scaling: You can scale compute and storage independently to match your workload needs. [7]  
 • Failover: In case of instance failure, Amazon DocumentDB automatically fails over to a replica instance in another Availability Zone. [1]  
 
-AI responses may include mistakes.
+Underlying Methods (Java – MongoDB Driver for Amazon DocumentDB):
 
-[1] https://docs.aws.amazon.com/documentdb/latest/developerguide/what-is.html[2] https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/govcloud-dcdb.html[3] https://docs.aws.amazon.com/documentdb/latest/developerguide/functional-differences.html[4] https://n2ws.com/blog/aws-cloud/amazon-documentdb[5] https://docs.localstack.cloud/user-guide/aws/docdb/[6] https://www.youtube.com/watch?v=PsHXnWBUU-g[7] https://aws.amazon.com/documentdb/[8] https://www.youtube.com/watch?v=7sG_W2_5Io4[9] https://docs.aws.amazon.com/documentdb/latest/developerguide/document-database-use-cases.html[10] https://n2ws.com/blog/aws-cloud/amazon-documentdb[11] https://aws.amazon.com/documentdb/pricing/[12] https://aws.amazon.com/documentdb/faqs/[13] https://docs.aws.amazon.com/documentdb/latest/developerguide/what-is-document-db.html[14] https://www.amazonaws.cn/en/documentdb/features/[15] https://aws.amazon.com/documentdb/features/[16] https://help.qlik.com/talend/en-US/components/8.0/amazon-documentdb/amazon-documentdb-component[17] https://www.projectpro.io/article/aws-documentdb/911[18] https://www.influxdata.com/document-database/[19] https://www.youtube.com/watch?v=VjiuOxpaQ7A[20] https://n2ws.com/blog/aws-cloud/amazon-documentdb[21] https://n2ws.com/blog/aws-cloud/amazon-documentdb[22] https://vitiya99.medium.com/taming-your-data-with-aws-documentdb-a-deep-dive-930554cb2840[23] https://n2ws.com/blog/aws-cloud/amazon-documentdb[24] https://vitiya99.medium.com/taming-your-data-with-aws-documentdb-a-deep-dive-930554cb2840[25] https://www.datadoghq.com/blog/monitor-documentdb-with-datadog/[26] https://n2ws.com/blog/aws-cloud/amazon-documentdb[27] https://bluexp.netapp.com/blog/aws-cvo-blg-aws-database-as-a-service-8-ways-to-manage-dbs-in-aws[28] https://docs.aws.amazon.com/documentdb/latest/developerguide/how-it-works.html[-] https://docs.aws.amazon.com/documentdb/latest/developerguide/how-it-works.html
+• `MongoClients.create(connectionString)`: Connects to the DocumentDB cluster using the MongoDB-compatible URI.  
+• `getDatabase("dbName")`: Retrieves a specific database instance.  
+• `getCollection("collectionName")`: Accesses a document collection (table equivalent).  
+• `insertOne(document) / insertMany(documents)`: Inserts single or multiple JSON-like documents into a collection.  
+• `find(filter)`: Queries the collection with optional filters and projections.  
+• `findOneAndUpdate(filter, update)`: Updates and returns the matched document atomically.  
+• `replaceOne(filter, replacement)`: Replaces the document matching the filter with a new one.  
+• `deleteOne(filter) / deleteMany(filter)`: Removes one or multiple documents from the collection.  
+• `createIndex(keys)`: Creates an index on the specified fields to improve query performance.  
+• `aggregate(pipeline)`: Performs aggregation operations such as group, sort, and project.  
+• `watch()`: Opens a change stream to listen for real-time updates to the collection (supported in some driver versions).  
+• `withTransaction(callback)`: Executes multiple operations in a transaction block (requires cluster-level support).  
+• `countDocuments(filter)`: Counts the number of documents that match the query filter.  
+• `updateOne(filter, update) / updateMany(filter, update)`: Updates fields in one or many documents based on the filter.
