@@ -16,3 +16,64 @@ Use cases of Amazon S3: [17, 18]
 • Content distribution: S3 can be used to host static content and deliver it to users globally through services like AWS CloudFront. [1, 6, 24, 25, 26]  
 • Archival storage: S3 Glacier and S3 Glacier Deep Archive are optimized for archival storage and long-term data retention. [9, 10]  
 
+Underlying Methods (AWS SDK & Runtime Operations):
+
+• `createBucket(String bucketName)`: Creates a new bucket in the specified region.  
+• `listBuckets()`: Lists all S3 buckets owned by the authenticated sender.  
+• `putObject(PutObjectRequest, RequestBody)`: Uploads an object (file) to a bucket with optional metadata.  
+• `getObject(GetObjectRequest, Path)`: Downloads an object from a bucket to a local file.  
+• `getObjectAsBytes()`: Retrieves the object content as a byte array.  
+• `headObject()`: Retrieves metadata (e.g., size, content type, last modified) without downloading the object.  
+• `copyObject()`: Copies an object from one bucket/key to another.  
+• `deleteObject()`: Deletes a single object from a bucket.  
+• `deleteObjects()`: Deletes multiple objects in a single request.  
+• `listObjectsV2()`: Lists objects within a bucket (can include prefix and pagination).  
+• `putBucketPolicy() / getBucketPolicy()`: Sets or retrieves access control policies at the bucket level.  
+• `putObjectAcl() / getObjectAcl()`: Applies or retrieves object-level ACL permissions.  
+• `putBucketVersioning()`: Enables versioning to keep multiple variants of an object.  
+• `putBucketLifecycleConfiguration()`: Configures automatic data tiering, expiration, and cleanup.  
+• `putObjectTagging() / getObjectTagging()`: Adds or retrieves key-value tags used for filtering or lifecycle rules.  
+• `putBucketEncryption() / getBucketEncryption()`: Enables or retrieves default encryption settings for a bucket.  
+• `restoreObject()`: Initiates a temporary restore of archived objects from Glacier or Deep Archive.  
+• `generatePresignedUrl()`: Creates a time-limited URL to upload or download an object without requiring credentials.
+
+Example Usage (Java - AWS SDK v2):
+
+```java
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+
+import java.net.URL;
+import java.nio.file.Paths;
+import java.time.Duration;
+
+public class S3Example {
+
+    private final S3Client s3Client = S3Client.create();
+
+    public void uploadFile() {
+        PutObjectRequest request = PutObjectRequest.builder()
+            .bucket("my-bucket")
+            .key("uploads/file.txt")
+            .build();
+
+        s3Client.putObject(request, Paths.get("localfile.txt"));
+    }
+
+    public String generatePresignedUrl() {
+        S3Presigner presigner = S3Presigner.create();
+
+        PresignedGetObjectRequest presignedRequest =
+            presigner.presignGetObject(builder -> builder
+                .signatureDuration(Duration.ofMinutes(60))
+                .getObjectRequest(GetObjectRequest.builder()
+                    .bucket("my-bucket")
+                    .key("uploads/file.txt")
+                    .build()));
+
+        return presignedRequest.url().toString();
+    }
+}
