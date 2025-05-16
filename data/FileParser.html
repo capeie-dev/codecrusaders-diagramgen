@@ -26,14 +26,18 @@ How it Works: [2, 4]
 • Errors are caught and reported per row or batch.  
 • Data is forwarded to a service layer, DB, or external API.
 
-Example Usage (Java + CSV):
+Underlying Methods (Java – File Parsing Libraries):
 
-```java
-CsvSchema schema = CsvSchema.builder().addColumn("name").addColumn("age").build();
-MappingIterator<User> it = new CsvMapper().readerFor(User.class).with(schema)
-    .readValues(new File("users.csv"));
-
-while (it.hasNext()) {
-    User user = it.next();
-    userService.process(user);
-}
+• `CsvMapper.readerFor().with(schema).readValues(file)`: Reads and maps CSV rows into Java objects using Jackson CSV.  
+• `CsvSchema.builder().addColumn("colName")`: Defines a CSV schema for parsing with named or indexed columns.  
+• `POIFSFileSystem` / `XSSFWorkbook`: Classes from Apache POI used to load Excel `.xls` and `.xlsx` files.  
+• `Workbook.getSheetAt(0).getRow(i).getCell(j)`: Navigates Excel cells programmatically with Apache POI.  
+• `ObjectMapper.readValue(File, TypeReference)`: Reads a JSON file and maps it into POJOs using Jackson.  
+• `Gson.fromJson(reader, Class)`: Parses JSON files using Google's Gson library.  
+• `DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)`: Parses XML files using DOM API.  
+• `SAXParserFactory.newInstance().newSAXParser()`: Initializes a streaming XML parser (memory-efficient).  
+• `JAXBContext.newInstance().createUnmarshaller().unmarshal(file)`: Binds XML to POJOs using JAXB annotations.  
+• `BufferedReader`: Used to stream large files line-by-line, typically for custom CSV or text parsing.  
+• `Stream<String> lines = Files.lines(path)`: Modern Java streaming of file lines for functional processing.  
+• `BeanValidation`: Optionally validate parsed data against constraints like `@NotNull`, `@Email`, `@Pattern`.  
+• `try/catch + schema validation`: Custom error handling for malformed rows, type mismatches, or missing fields.
